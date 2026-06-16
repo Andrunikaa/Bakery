@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Из Пекарни — свежая выпечка с доставкой</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink:       #1C1510;
+  --bark:      #3D2B1F;
+  --amber:     #C2531A;
+  --amber-lt:  #E8784A;
+  --cream:     #FAF6EF;
+  --parchment: #F0E8D8;
+  --muted:     #7A6E62;
+  --border:    rgba(60,40,20,0.12);
+  --white:     #FFFFFF;
+  --green:     #3A5A3A;
+  --fd: 'Cormorant Garamond', Georgia, serif;
+  --fb: 'Inter', system-ui, sans-serif;
+}
+
+body { font-family: var(--fb); background: var(--cream); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: var(--fb); }
+
+/* ─── UTILITIES ─── */
+.container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+.section-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 10px;
+}
+.section-title {
+  font-family: var(--fd); font-size: clamp(30px,4vw,48px);
+  font-weight: 600; line-height: 1.15; color: var(--ink);
+}
+.section-title em { font-style: italic; color: var(--amber); }
+
+/* ─── HEADER ─── */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(250,246,239,0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px; gap: 24px;
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+  width: 38px; height: 38px; background: var(--amber); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.logo-text { font-family: var(--fd); font-size: 20px; font-weight: 600; line-height: 1.2; }
+.logo-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+nav { display: flex; gap: 28px; }
+nav a { font-size: 14px; color: var(--muted); transition: color .15s; }
+nav a:hover { color: var(--amber); }
+.header-actions { display: flex; align-items: center; gap: 12px; }
+.tel-link { font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap; }
+.cart-trigger {
+  background: var(--amber); color: #fff; border: none; border-radius: 22px;
+  padding: 9px 18px; font-size: 14px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  transition: background .15s;
+}
+.cart-trigger:hover { background: #a8461a; }
+.cart-badge {
+  background: rgba(255,255,255,0.28); border-radius: 10px;
+  padding: 1px 7px; font-size: 12px; font-weight: 600;
+}
+.burger { display: none; background: none; border: none; padding: 4px; }
+.burger span { display: block; width: 22px; height: 2px; background: var(--ink); margin: 5px 0; border-radius: 2px; transition: .2s; }
+
+/* ─── HERO ─── */
+.hero {
+  margin-top: 68px;
+  background: var(--bark);
+  min-height: 88vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+.hero-content {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 56px 80px 0;
+  position: relative; z-index: 2;
+}
+.hero-eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--amber-lt); margin-bottom: 20px;
+}
+.hero-title {
+  font-family: var(--fd); font-size: clamp(40px,5.5vw,72px);
+  font-weight: 600; line-height: 1.08; color: var(--white); margin-bottom: 24px;
+}
+.hero-title em { font-style: italic; color: var(--amber-lt); }
+.hero-desc {
+  font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.65;
+  max-width: 420px; margin-bottom: 40px;
+}
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--amber); color: #fff; border: none; border-radius: 26px;
+  padding: 14px 32px; font-size: 15px; font-weight: 600;
+  transition: background .15s, transform .1s;
+}
+.btn-primary:hover { background: var(--amber-lt); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent; color: rgba(255,255,255,0.8);
+  border: 1.5px solid rgba(255,255,255,0.25); border-radius: 26px;
+  padding: 14px 32px; font-size: 15px; font-weight: 500;
+  transition: border-color .15s, color .15s;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+.hero-stats {
+  display: flex; gap: 36px; margin-top: 52px;
+  border-top: 1px solid rgba(255,255,255,0.1); padding-top: 36px;
+}
+.hero-stat-num {
+  font-family: var(--fd); font-size: 36px; font-weight: 600; color: var(--white); line-height: 1;
+}
+.hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+.hero-visual {
+  position: relative; overflow: hidden;
+}
+.hero-img-placeholder {
+  width: 100%; height: 100%; min-height: 480px;
+  background: linear-gradient(135deg, #2A1E16 0%, #3D2B1F 50%, #1C1510 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.hero-img-placeholder .img-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.5); padding: 14px 20px;
+  font-size: 12px; color: rgba(255,255,255,0.6); text-align: center;
+  letter-spacing: 0.5px;
+}
+.photo-stub {
+  width: 100%; height: 100%; object-fit: cover; display: flex;
+  align-items: center; justify-content: center;
+}
+.img-ph {
+  width: 100%; height: 100%; background: #2A1E16;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; color: rgba(255,255,255,0.18); text-align: center;
+  padding: 24px;
+}
+.img-ph svg { opacity: 0.35; }
+.img-ph p { font-size: 13px; line-height: 1.5; }
+
+/* ─── PERKS ─── */
+.perks { background: var(--white); border-bottom: 1px solid var(--border); }
+.perks-inner {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+}
+.perk {
+  padding: 36px 28px; border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.perk:last-child { border-right: none; }
+.perk-icon {
+  width: 44px; height: 44px; background: var(--parchment); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.perk-title { font-weight: 600; font-size: 15px; }
+.perk-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+/* ─── GALLERY ─── */
+.gallery-section { padding: 80px 0; }
+.gallery-head { text-align: center; margin-bottom: 48px; }
+.gallery-head .section-title { margin-bottom: 12px; }
+.gallery-head p { color: var(--muted); max-width: 480px; margin: 0 auto; font-size: 16px; }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-rows: 280px 220px;
+  gap: 12px;
+}
+.gallery-item {
+  border-radius: 14px; overflow: hidden; position: relative;
+}
+.gallery-item:first-child { grid-row: 1 / 3; }
+.gallery-ph {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; color: rgba(255,255,255,0.5); text-align: center; padding: 20px;
+  font-size: 12px; letter-spacing: 0.5px;
+}
+.gallery-ph svg { opacity: 0.5; }
+.gallery-ph p { line-height: 1.5; }
+.g1 { background: #2E2018; }
+.g2 { background: #3A2A1C; }
+.g3 { background: #251A12; }
+.g4 { background: #322416; }
+.g5 { background: #2A1E13; }
+
+/* ─── CATALOG ─── */
+.catalog-section { padding: 80px 0; background: var(--parchment); }
+.catalog-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+.cat-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.cat-btn {
+  background: transparent; border: 1px solid var(--border); border-radius: 20px;
+  padding: 7px 16px; font-size: 13px; color: var(--muted); transition: all .15s;
+}
+.cat-btn:hover { border-color: var(--amber); color: var(--amber); }
+.cat-btn.active { background: var(--amber); color: #fff; border-color: var(--amber); }
+.products-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(256px,1fr)); gap: 18px;
+}
+.product-card {
+  background: var(--white); border-radius: 16px; border: 1px solid var(--border);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform .18s, box-shadow .18s;
+}
+.product-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(28,21,16,.1); }
+.prod-img {
+  height: 190px; background: var(--parchment);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.prod-img .prod-ph {
+  width: 100%; height: 100%; background: #F0E8D8;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; color: rgba(61,43,31,0.25);
+}
+.prod-img .prod-ph svg { opacity: 0.4; }
+.prod-img .prod-ph span { font-size: 11px; letter-spacing: 0.5px; }
+.prod-cat-tag {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--white); color: var(--amber);
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 20px;
+}
+.prod-body { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; }
+.prod-name { font-family: var(--fd); font-size: 20px; font-weight: 600; margin-bottom: 6px; line-height: 1.25; }
+.prod-desc { font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 14px; }
+.prod-weight { font-size: 12px; color: var(--amber); font-weight: 500; margin-bottom: 12px; }
+.prod-footer { display: flex; align-items: center; justify-content: space-between; }
+.prod-price { font-size: 22px; font-weight: 600; }
+.prod-price sub { font-size: 13px; font-weight: 400; color: var(--muted); }
+.add-to-cart {
+  background: var(--parchment); color: var(--amber);
+  border: none; border-radius: 20px; padding: 8px 18px;
+  font-size: 13px; font-weight: 600; transition: all .15s;
+}
+.add-to-cart:hover, .add-to-cart.active { background: var(--amber); color: #fff; }
+
+/* ─── HOW TO ORDER ─── */
+.how-section { padding: 88px 0; background: var(--white); }
+.how-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.how-steps { display: flex; flex-direction: column; gap: 0; }
+.how-step {
+  display: flex; gap: 20px; padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.how-step:first-child { padding-top: 0; }
+.how-step:last-child { border-bottom: none; }
+.step-num {
+  font-family: var(--fd); font-size: 44px; font-weight: 600;
+  color: var(--parchment); line-height: 1; flex-shrink: 0; width: 52px;
+  -webkit-text-stroke: 1.5px var(--amber);
+}
+.step-text h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.step-text p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.how-visual {
+  border-radius: 20px; overflow: hidden; height: 520px;
+}
+.how-ph {
+  width: 100%; height: 100%; background: #F0E8D8;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; color: rgba(61,43,31,0.25); text-align: center; padding: 32px;
+}
+.how-ph p { font-size: 13px; line-height: 1.5; }
+
+/* ─── REVIEWS ─── */
+.reviews-section { padding: 80px 0; background: var(--bark); }
+.reviews-head { text-align: center; margin-bottom: 48px; }
+.reviews-head .section-title { color: var(--white); }
+.reviews-head .section-eyebrow { color: var(--amber-lt); }
+.reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.review-card {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px; padding: 24px;
+}
+.review-stars { font-size: 16px; margin-bottom: 12px; }
+.review-text { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.65; margin-bottom: 18px; font-style: italic; }
+.reviewer { display: flex; align-items: center; gap: 12px; }
+.reviewer-avatar {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--amber);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 15px; color: #fff; flex-shrink: 0;
+}
+.reviewer-name { font-size: 14px; font-weight: 600; color: var(--white); }
+.reviewer-date { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+/* ─── CONTACTS ─── */
+.contacts-section { padding: 80px 0; }
+.contacts-inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start; }
+.contacts-left h2.section-title { margin-bottom: 20px; }
+.contacts-left p { color: var(--muted); font-size: 15px; line-height: 1.65; margin-bottom: 28px; }
+.contact-list { display: flex; flex-direction: column; gap: 16px; }
+.contact-item { display: flex; gap: 14px; align-items: flex-start; }
+.contact-icon {
+  width: 42px; height: 42px; background: var(--parchment); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.contact-item-title { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 3px; }
+.contact-item-val { font-size: 15px; font-weight: 500; }
+.map-ph {
+  border-radius: 18px; overflow: hidden; height: 360px;
+  background: #E8E0D5;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; color: rgba(61,43,31,0.3); text-align: center; padding: 32px;
+  border: 1px solid var(--border);
+}
+.map-ph p { font-size: 13px; line-height: 1.5; }
+
+/* ─── FOOTER ─── */
+footer { background: var(--ink); color: rgba(255,255,255,0.8); }
+.footer-main {
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 48px; padding: 60px 0 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand .logo-mark { margin-bottom: 16px; }
+.footer-brand p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 280px; margin-bottom: 20px; }
+.social-links { display: flex; gap: 10px; }
+.soc-btn {
+  width: 38px; height: 38px; background: rgba(255,255,255,0.08); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+  color: rgba(255,255,255,0.5); transition: background .15s, color .15s; border: none;
+}
+.soc-btn:hover { background: var(--amber); color: #fff; }
+.footer-col h5 {
+  font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 0.5px;
+  margin-bottom: 18px; text-transform: uppercase;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { font-size: 14px; color: rgba(255,255,255,0.5); transition: color .15s; }
+.footer-col ul li a:hover { color: var(--amber-lt); }
+.footer-col .f-contact-item { display: flex; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 10px; }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0; font-size: 13px; color: rgba(255,255,255,0.3); flex-wrap: wrap; gap: 10px;
+}
+.footer-bottom a { color: rgba(255,255,255,0.3); transition: color .15s; }
+.footer-bottom a:hover { color: rgba(255,255,255,0.6); }
+
+/* ─── CART SIDEBAR ─── */
+.cart-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45); z-index: 400;
+}
+.cart-overlay.open { display: block; }
+.cart-sidebar {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(440px, 100vw); background: var(--white);
+  z-index: 401; transform: translateX(100%);
+  transition: transform .28s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+}
+.cart-sidebar.open { transform: translateX(0); }
+.cart-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.cart-hdr h2 { font-family: var(--fd); font-size: 22px; font-weight: 600; }
+.cart-close {
+  width: 36px; height: 36px; background: var(--parchment); border: none;
+  border-radius: 50%; font-size: 18px; display: flex; align-items: center; justify-content: center;
+  color: var(--ink); transition: background .15s;
+}
+.cart-close:hover { background: var(--border); }
+.cart-body { flex: 1; overflow-y: auto; padding: 16px 24px; }
+.cart-empty-msg { text-align: center; padding: 60px 0; color: var(--muted); font-size: 15px; }
+.cart-empty-msg p { margin-top: 8px; font-size: 13px; }
+.cart-item {
+  display: flex; gap: 14px; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+}
+.cart-item:last-child { border-bottom: none; }
+.ci-icon {
+  width: 54px; height: 54px; background: var(--parchment); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 22px;
+}
+.ci-info { flex: 1; min-width: 0; }
+.ci-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ci-price { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.ci-qty { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.qbtn {
+  width: 28px; height: 28px; background: var(--parchment); border: none; border-radius: 50%;
+  font-size: 17px; display: flex; align-items: center; justify-content: center;
+  color: var(--ink); transition: background .1s; line-height: 1;
+}
+.qbtn:hover { background: var(--amber); color: #fff; }
+.qnum { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+.cart-footer { border-top: 1px solid var(--border); padding: 20px 24px; flex-shrink: 0; background: var(--cream); }
+.total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+.total-label { font-size: 15px; color: var(--muted); }
+.total-price { font-family: var(--fd); font-size: 28px; font-weight: 600; }
+.btn-cart-primary {
+  width: 100%; background: var(--amber); color: #fff; border: none; border-radius: 26px;
+  padding: 14px; font-size: 15px; font-weight: 600; transition: background .15s;
+}
+.btn-cart-primary:hover { background: var(--amber-lt); }
+.btn-cart-primary:disabled { opacity: .55; cursor: not-allowed; }
+
+/* Checkout form inside cart */
+.checkout-panel { display: none; }
+.checkout-panel.active {
+  display: block;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+.form-field { margin-bottom: 13px; }
+.form-field label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 6px; }
+.form-field input, .form-field textarea, .form-field select {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+  border-radius: 10px; font-family: var(--fb); font-size: 14px; color: var(--ink);
+  background: var(--white); outline: none; transition: border-color .15s;
+}
+.form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--amber); }
+.form-field textarea { resize: vertical; min-height: 72px; }
+.form-actions { display: flex; gap: 10px; margin-top: 4px; }
+.btn-back {
+  background: transparent; border: 1.5px solid var(--border); border-radius: 22px;
+  padding: 11px 18px; font-size: 14px; color: var(--muted); transition: border-color .15s;
+  flex-shrink: 0;
+}
+.btn-back:hover { border-color: var(--muted); }
+.btn-submit {
+  flex: 1; background: var(--amber); color: #fff; border: none; border-radius: 22px;
+  padding: 12px; font-size: 15px; font-weight: 600; transition: background .15s;
+}
+.btn-submit:hover { background: var(--amber-lt); }
+.btn-submit:disabled { opacity: .55; cursor: not-allowed; }
+.success-panel { display: none; text-align: center; padding: 32px 8px; }
+.success-panel.active { display: block; }
+.success-ring {
+  width: 72px; height: 72px; background: #E8F5E9; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 30px;
+  margin: 0 auto 16px;
+}
+.success-panel h3 { font-family: var(--fd); font-size: 24px; font-weight: 600; margin-bottom: 10px; }
+.success-panel p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* Notice bar */
+.notice-bar {
+  background: #FFF3CD; border-bottom: 1px solid #FFE082;
+  padding: 10px 20px; font-size: 12px; color: #5D4037; line-height: 1.5;
+}
+.notice-bar strong { display: block; }
+.notice-bar code { background: rgba(0,0,0,0.08); padding: 1px 5px; border-radius: 3px; font-size: 11px; word-break: break-all; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .footer-main { grid-template-columns: 1fr 1fr; gap: 32px; }
+  nav { display: none; }
+  .how-inner { grid-template-columns: 1fr; }
+  .how-visual { height: 320px; }
+  .contacts-inner { grid-template-columns: 1fr; }
+  .map-ph { height: 260px; }
+}
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-content { padding: 56px 0 40px; }
+  .hero-visual { min-height: 300px; display: block; }
+  .hero-stats { flex-wrap: wrap; gap: 24px; }
+  .perks-inner { grid-template-columns: 1fr 1fr; }
+  .perk { border-right: none; border-bottom: 1px solid var(--border); }
+  .perk:nth-child(odd) { border-right: 1px solid var(--border); }
+  .perk:nth-last-child(-n+2) { border-bottom: none; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px 200px; }
+  .gallery-item:first-child { grid-row: auto; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .footer-main { grid-template-columns: 1fr 1fr; }
+  .catalog-head { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 540px) {
+  .perks-inner { grid-template-columns: 1fr; }
+  .perk { border-right: none; }
+  .perk:nth-child(odd) { border-right: none; }
+  .hero-actions { flex-direction: column; }
+  .btn-primary, .btn-outline { text-align: center; }
+  .footer-main { grid-template-columns: 1fr; gap: 28px; }
+  .gallery-grid { grid-template-columns: 1fr; grid-template-rows: repeat(5, 200px); }
+  .tel-link { display: none; }
+  .products-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 380px) {
+  .products-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .burger { display: flex; flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-mark">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 15 Q4 9 11 9 Q18 9 19 15" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="3" y="14" width="16" height="4" rx="2" fill="white" opacity="0.9"/><path d="M7 14 Q8 10 11 10 Q14 10 15 14" fill="white" opacity="0.4"/></svg>
+        </div>
+        <div>
+          <div class="logo-text">Из пекарни</div>
+          <div class="logo-sub">Свежая выпечка</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#catalog">Меню</a>
+        <a href="#gallery">Интерьер</a>
+        <a href="#how">Как заказать</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <div class="header-actions">
+        <a href="tel:+74951234567" class="tel-link">+7 (495) 123-45-67</a>
+        <button class="cart-trigger" onclick="openCart()">
+          🛒 Корзина
+          <span class="cart-badge" id="cart-count">0</span>
+        </button>
+        <button class="burger" aria-label="Меню">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="container" style="display:contents;">
+    <div style="padding-left:max(24px, calc((100vw - 1140px)/2 + 24px)); background: var(--bark);">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Домашняя пекарня · Москва</div>
+        <h1 class="hero-title">Выпечка,<br>как в детстве<br><em>у бабушки</em></h1>
+        <p class="hero-desc">Печём пироги, хлеб и булочки каждое утро. Только натуральные ингредиенты, никаких улучшителей. Доставка по Москве за 2 часа.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Заказать сейчас</button>
+          <button class="btn-outline" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Как это работает</button>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">5 лет</div>
+            <div class="hero-stat-label">печём для вас</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">40+</div>
+            <div class="hero-stat-label">видов выпечки</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">4.9★</div>
+            <div class="hero-stat-label">средняя оценка</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="img-ph" style="min-height:100%">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="44" width="56" height="16" rx="4" fill="#C2531A" opacity="0.3"/><path d="M12 44 Q16 24 36 24 Q56 24 60 44" fill="#C2531A" opacity="0.2" stroke="#C2531A" stroke-width="2"/><path d="M20 44 Q22 32 36 32 Q50 32 52 44" fill="#C2531A" opacity="0.3"/><rect x="30" y="12" width="12" height="14" rx="2" fill="none" stroke="#C2531A" stroke-width="1.5" opacity="0.4"/><path d="M34 16 Q36 10 38 16" stroke="#C2531A" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round"/></svg>
+        <p>Фотография пирога<br>или интерьера пекарни</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PERKS ═══ -->
+<section class="perks">
+  <div class="container">
+    <div class="perks-inner">
+      <div class="perk">
+        <div class="perk-icon">🌾</div>
+        <div class="perk-title">Натуральный состав</div>
+        <div class="perk-desc">Мука, масло, яйца, сезонные фрукты — и больше ничего лишнего. Без Е-добавок.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">🔥</div>
+        <div class="perk-title">Печём каждое утро</div>
+        <div class="perk-desc">Вы получаете выпечку, которой не более 4 часов. Свежесть — наш главный ингредиент.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">🚴</div>
+        <div class="perk-title">Доставка за 2 часа</div>
+        <div class="perk-desc">Принимаем заказы ежедневно до 14:00. Доставляем по всей Москве в пределах МКАД.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">📦</div>
+        <div class="perk-title">Удобная упаковка</div>
+        <div class="perk-desc">Каждый пирог упакован в фирменную коробку, которая сохраняет тепло при транспортировке.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section class="gallery-section" id="gallery">
+  <div class="container">
+    <div class="gallery-head">
+      <div class="section-eyebrow">Наша пекарня</div>
+      <h2 class="section-title">Место, где рождается <em>вкус</em></h2>
+      <p>Мы работаем в уютной пекарне на Чистых Прудах. Заходите, угостим чаем.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-ph g1">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="28" width="36" height="12" rx="3" fill="white" opacity="0.2"/><path d="M8 28 Q10 14 24 14 Q38 14 40 28" fill="white" opacity="0.12" stroke="white" stroke-width="1.5"/><path d="M14 28 Q16 20 24 20 Q32 20 34 28" fill="white" opacity="0.2"/></svg>
+          <p>Главное фото<br>интерьера пекарни</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-ph g2">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="12" stroke="white" stroke-width="1.5" opacity="0.4"/><path d="M10 22 Q14 14 18 12 Q22 14 26 22" fill="white" opacity="0.2"/></svg>
+          <p>Витрина</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-ph g3">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="16" width="28" height="16" rx="2" fill="white" opacity="0.2"/><rect x="8" y="8" width="6" height="10" rx="1" fill="white" opacity="0.3"/><rect x="16" y="10" width="6" height="8" rx="1" fill="white" opacity="0.3"/><rect x="24" y="12" width="6" height="6" rx="1" fill="white" opacity="0.3"/></svg>
+          <p>Полка с хлебом</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-ph g4">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><ellipse cx="18" cy="22" rx="12" ry="8" fill="white" opacity="0.15"/><path d="M6 22 Q10 10 18 8 Q26 10 30 22" fill="white" opacity="0.2" stroke="white" stroke-width="1.5"/></svg>
+          <p>Процесс выпечки</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-ph g5">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="6" y="18" width="24" height="14" rx="3" fill="white" opacity="0.2"/><circle cx="18" cy="12" r="6" stroke="white" stroke-width="1.5" opacity="0.3"/><path d="M12 18 Q14 12 18 10 Q22 12 24 18" fill="white" opacity="0.2"/></svg>
+          <p>Кондитер за работой</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ═══ CATALOG ═══ -->
+<section class="catalog-section" id="catalog">
+  <div class="container">
+    <div class="catalog-head">
+      <div>
+        <div class="section-eyebrow">Наше меню</div>
+        <h2 class="section-title">Выберите <em>своё</em></h2>
+      </div>
+      <div class="cat-filters">
+        <button class="cat-btn active" onclick="filterCat('all',this)">Все</button>
+        <button class="cat-btn" onclick="filterCat('pie',this)">Пироги</button>
+        <button class="cat-btn" onclick="filterCat('bread',this)">Хлеб</button>
+        <button class="cat-btn" onclick="filterCat('bun',this)">Булочки</button>
+        <button class="cat-btn" onclick="filterCat('cake',this)">Пирожные</button>
+      </div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</section>
+
+<!-- ═══ HOW TO ORDER ═══ -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="how-inner">
+      <div>
+        <div class="section-eyebrow">Просто и удобно</div>
+        <h2 class="section-title" style="margin-bottom:36px;">Как сделать<br><em>заказ</em></h2>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>Выберите выпечку</h4>
+              <p>Просмотрите наш каталог и добавьте понравившиеся пироги или булочки в корзину.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>Оформите заказ</h4>
+              <p>Укажите имя, телефон и адрес доставки. Выберите удобное время.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>Подтверждение</h4>
+              <p>Мы перезвоним в течение 15 минут для подтверждения и уточнения деталей.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <h4>Получите свежую выпечку</h4>
+              <p>Курьер доставит заказ прямо к вашей двери. Оплата при получении.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how-visual">
+        <div class="how-ph">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M12 44 Q16 24 32 22 Q48 24 52 44" fill="#C2531A" opacity="0.15" stroke="#C2531A" stroke-width="2"/><rect x="12" y="42" width="40" height="12" rx="4" fill="#C2531A" opacity="0.2"/><path d="M20 42 Q23 32 32 30 Q41 32 44 42" fill="#C2531A" opacity="0.25"/><rect x="26" y="10" width="12" height="14" rx="2" fill="none" stroke="#C2531A" stroke-width="1.5" opacity="0.5"/></svg>
+          <p style="font-size:13px; max-width:240px;">Фото: готовые пироги,<br>упаковка или момент доставки</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REVIEWS ═══ -->
+<section class="reviews-section">
+  <div class="container">
+    <div class="reviews-head">
+      <div class="section-eyebrow">Отзывы</div>
+      <h2 class="section-title">Что говорят <em style="color:var(--amber-lt)">покупатели</em></h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">«Заказываю пироги каждую неделю уже два года. Пирог с яблоками — просто шедевр. Тесто тает во рту, начинки очень много. Доставка всегда вовремя, упаковка аккуратная.»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">АМ</div>
+          <div>
+            <div class="reviewer-name">Анна М.</div>
+            <div class="reviewer-date">14 мая 2025</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">«Брала на день рождения три пирога — с мясом, с грибами и с вишней. Гости были в восторге, всё съели до крошки. Сразу отправила номер пекарни всем подругам.»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">ОК</div>
+          <div>
+            <div class="reviewer-name">Ольга К.</div>
+            <div class="reviewer-date">2 июня 2025</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">«Ржаной хлеб на закваске — лучший в Москве. Беру два раза в неделю. Порадовало, что состав честный — никакой химии. Пекарня явно любит своё дело.»</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">ДС</div>
+          <div>
+            <div class="reviewer-name">Дмитрий С.</div>
+            <div class="reviewer-date">19 июня 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACTS ═══ -->
+<section class="contacts-section" id="contacts">
+  <div class="container">
+    <div class="contacts-inner">
+      <div class="contacts-left">
+        <div class="section-eyebrow">Мы рядом</div>
+        <h2 class="section-title">Найти<br><em>нас</em></h2>
+        <p style="margin-top:16px;">Заходите в нашу пекарню — попробуйте прямо на месте. По будням с 7:00 до 20:00, по выходным с 8:00 до 18:00.</p>
+        <div class="contact-list" style="margin-top:28px;">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-item-title">Адрес</div>
+              <div class="contact-item-val">Москва, ул. Чистопрудный бул., 14</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-item-title">Телефон</div>
+              <div class="contact-item-val"><a href="tel:+74951234567">+7 (495) 123-45-67</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💬</div>
+            <div>
+              <div class="contact-item-title">WhatsApp / Telegram</div>
+              <div class="contact-item-val">+7 (916) 000-00-00</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <div class="contact-item-title">Часы работы</div>
+              <div class="contact-item-val">Пн–Пт 7:00–20:00 · Сб–Вс 8:00–18:00</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-item-title">Email</div>
+              <div class="contact-item-val">hello@izpekarnipirogi.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="map-ph">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="24" r="10" stroke="#C2531A" stroke-width="2" opacity="0.4"/><circle cx="28" cy="24" r="4" fill="#C2531A" opacity="0.4"/><path d="M28 34 Q20 44 28 50 Q36 44 28 34Z" fill="#C2531A" opacity="0.25"/></svg>
+          <p style="font-size:13px;">Вставьте iframe с Яндекс Картами<br>или Google Maps</p>
+          <a href="https://yandex.ru/maps" target="_blank" style="font-size:12px; color:var(--amber); border-bottom: 1px solid var(--amber); padding-bottom:1px;">Открыть на карте →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="logo-mark" style="margin-bottom:14px;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 15 Q4 9 11 9 Q18 9 19 15" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="3" y="14" width="16" height="4" rx="2" fill="white" opacity="0.9"/><path d="M7 14 Q8 10 11 10 Q14 10 15 14" fill="white" opacity="0.4"/></svg>
+        </div>
+        <p>Домашняя пекарня в Москве. Печём каждый день с 2019 года. Только натуральный состав, только свежая выпечка.</p>
+        <div class="social-links">
+          <button class="soc-btn" title="ВКонтакте">В</button>
+          <button class="soc-btn" title="Telegram">✈</button>
+          <button class="soc-btn" title="Instagram">◻</button>
+          <button class="soc-btn" title="YouTube">▶</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Меню</h5>
+        <ul>
+          <li><a href="#catalog" onclick="filterCat('pie', document.querySelector('.cat-btn'))">Пироги</a></li>
+          <li><a href="#catalog">Хлеб</a></li>
+          <li><a href="#catalog">Булочки</a></li>
+          <li><a href="#catalog">Пирожные</a></li>
+          <li><a href="#catalog">Корпоративные заказы</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Компания</h5>
+        <ul>
+          <li><a href="#gallery">О нас</a></li>
+          <li><a href="#how">Как заказать</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+          <li><a href="#">Вакансии</a></li>
+          <li><a href="#">Блог</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Контакты</h5>
+        <div class="f-contact-item">📞 <span><a href="tel:+74951234567" style="color:rgba(255,255,255,0.5);">+7 (495) 123-45-67</a></span></div>
+        <div class="f-contact-item">💬 <span>+7 (916) 000-00-00</span></div>
+        <div class="f-contact-item">📍 <span>Чистопрудный бул., 14</span></div>
+        <div class="f-contact-item">🕐 <span>Пн–Пт 7:00–20:00<br>Сб–Вс 8:00–18:00</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Из пекарни. Все права защищены.</span>
+      <div style="display:flex;gap:20px;">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Публичная оферта</a>
+        <a href="#">Доставка и оплата</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ CART SIDEBAR ═══ -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-hdr">
+    <h2>Ваш заказ</h2>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+
+  
+
+  <div class="cart-body" id="cart-body"></div>
+
+  <div class="cart-footer" id="cart-main-footer">
+    <div class="total-row">
+      <span class="total-label">Итого:</span>
+      <span class="total-price" id="total-price">0 ₽</span>
+    </div>
+    <button class="btn-cart-primary" onclick="showCheckout()">Оформить заказ →</button>
+  </div>
+
+  <div class="cart-footer checkout-panel" id="checkout-panel">
+    <div class="form-field">
+      <label>Имя *</label>
+      <input id="f-name" type="text" placeholder="Иван Иванов">
+    </div>
+    <div class="form-field">
+      <label>Телефон *</label>
+      <input id="f-phone" type="tel" placeholder="+7 (900) 000-00-00">
+    </div>
+    <div class="form-field">
+      <label>Способ получения</label>
+      <select id="f-delivery">
+        <option>Доставка курьером</option>
+        <option>Самовывоз</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Адрес доставки</label>
+      <input id="f-address" type="text" placeholder="Улица, дом, квартира">
+    </div>
+    <div class="form-field">
+      <label>Желаемое время</label>
+      <input id="f-time" type="text" placeholder="Например: после 17:00">
+    </div>
+    <div class="form-field">
+      <label>Комментарий</label>
+      <textarea id="f-comment" placeholder="Пожелания к заказу, аллергии..."></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn-back" onclick="hideCheckout()">← Назад</button>
+      <button class="btn-submit" onclick="submitOrder()" id="submit-btn">Отправить заказ</button>
+    </div>
+  </div>
+
+  <div class="success-panel" id="success-panel">
+    <div class="success-ring">✓</div>
+    <h3>Заказ принят!</h3>
+    <p>Мы свяжемся с вами в течение 15 минут для подтверждения.</p>
+    <button class="btn-cart-primary" style="margin-top:24px;" onclick="afterSuccess()">Отлично, спасибо!</button>
+  </div>
+</div>
+
+<script>
+// ═══ КОНФИГ ═══
+// Замените на URL вашего Google Apps Script:
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwbyvAmjOgJg2EDLTmOn5pt8iwQYX3T5uiLZZpDca_NE1mmmB83vbScFvklVDp_kbYKaA/exec';
+
+const PRODUCTS = [
+  { id:1,  name:'Пирог с капустой',    cat:'pie',   price:350, weight:'700 г',  emoji:'🥬', desc:'Сочная тушёная капуста с яйцом в мягком дрожжевом тесте. Классика.' },
+  { id:2,  name:'Пирог с яблоками',    cat:'pie',   price:380, weight:'650 г',  emoji:'🍎', desc:'Хрустящее тесто, яблоки с корицей и ванилью. Подаём тёплым.' },
+  { id:3,  name:'Пирог с мясом',        cat:'pie',   price:450, weight:'800 г',  emoji:'🥩', desc:'Сочная говядина с луком, запечённая в мягком тесте.' },
+  { id:4,  name:'Пирог с грибами',      cat:'pie',   price:390, weight:'680 г',  emoji:'🍄', desc:'Жареные шампиньоны с луком и сметаной.' },
+  { id:5,  name:'Пирог с вишней',       cat:'pie',   price:360, weight:'600 г',  emoji:'🍒', desc:'Сочная вишня с сахаром в нежном песочном тесте.' },
+  { id:6,  name:'Пирог со шпинатом',   cat:'pie',   price:370, weight:'620 г',  emoji:'🌿', desc:'Шпинат, сыр рикотта и яйца. Для тех, кто любит полезное.' },
+  { id:7,  name:'Ржаной хлеб',          cat:'bread', price:180, weight:'800 г',  emoji:'🍞', desc:'На живой закваске, с хрустящей корочкой и плотным мякишем.' },
+  { id:8,  name:'Белый батон',           cat:'bread', price:140, weight:'600 г',  emoji:'🥖', desc:'Нежный мякиш, тонкая золотистая корочка. Просто и вкусно.' },
+  { id:9,  name:'Чиабатта',             cat:'bread', price:200, weight:'450 г',  emoji:'🫓', desc:'Итальянская чиабатта с оливковым маслом и хрустящей корочкой.' },
+  { id:10, name:'Булочка синнабон',      cat:'bun',   price:130, weight:'120 г',  emoji:'🌀', desc:'Мягкое тесто, корица, сливочная глазурь. Тает во рту.' },
+  { id:11, name:'Плюшка с маком',        cat:'bun',   price:90,  weight:'100 г',  emoji:'🫐', desc:'Классическая плюшка с маковой начинкой, щедро посыпана сахаром.' },
+  { id:12, name:'Круассан',              cat:'bun',   price:140, weight:'90 г',   emoji:'🥐', desc:'Слоёный, масляный, с хрустящей корочкой. Печём по утрам.' },
+  { id:13, name:'Эклер заварной',        cat:'cake',  price:120, weight:'100 г',  emoji:'🍮', desc:'Воздушный заварной крем, тонкое тесто, шоколадная глазурь.' },
+  { id:14, name:'Медовик',              cat:'cake',  price:170, weight:'150 г',  emoji:'🍯', desc:'Тонкие медовые коржи со сметанным кремом. Порция 150 г.' },
+  { id:15, name:'Тарт с лимоном',        cat:'cake',  price:190, weight:'120 г',  emoji:'🍋', desc:'Хрустящее песочное тесто и нежный лимонный крем.' },
+  { id:16, name:'Наполеон',              cat:'cake',  price:180, weight:'140 г',  emoji:'🎂', desc:'Слоёное тесто с классическим заварным кремом. Порция 140 г.' },
+];
+
+// ═══ СТЕЙТ ═══
+let cart = {};
+let currentCat = 'all';
+
+// ═══ РЕНДЕР КАТАЛОГА ═══
+function renderProducts() {
+  const list = currentCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === currentCat);
+  document.getElementById('products-grid').innerHTML = list.map(p => {
+    const inCart = cart[p.id];
+    return `
+    <div class="product-card">
+      <div class="prod-img">
+        <div class="prod-ph">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M8 32 Q11 18 24 16 Q37 18 40 32" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="30" width="32" height="10" rx="3" fill="currentColor" opacity="0.2"/><path d="M14 30 Q17 22 24 20 Q31 22 34 30" fill="currentColor" opacity="0.25"/></svg>
+          <span>фото товара</span>
+        </div>
+        <div class="prod-cat-tag">${catLabel(p.cat)}</div>
+      </div>
+      <div class="prod-body">
+        <div style="font-size:24px;margin-bottom:6px;">${p.emoji}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-weight">${p.weight}</div>
+        <div class="prod-desc">${p.desc}</div>
+        <div class="prod-footer">
+          <div class="prod-price">${p.price}<sub> ₽</sub></div>
+          <button class="add-to-cart ${inCart ? 'active':''}" onclick="addItem(${p.id})">
+            ${inCart ? `✓ ${inCart.qty} шт.` : '+ В корзину'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function catLabel(c) {
+  return { pie:'Пирог', bread:'Хлеб', bun:'Булочка', cake:'Пирожное' }[c] || c;
+}
+
+function filterCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderProducts();
+}
+
+// ═══ КОРЗИНА ═══
+function addItem(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!cart[id]) cart[id] = { ...p, qty: 0 };
+  cart[id].qty++;
+  updateCart();
+  renderProducts();
+  openCart();
+}
+
+function changeQty(id, d) {
+  if (!cart[id]) return;
+  cart[id].qty += d;
+  if (cart[id].qty <= 0) delete cart[id];
+  updateCart();
+  renderProducts();
+  renderCartBody();
+}
+
+function updateCart() {
+  const items = Object.values(cart);
+  const total = items.reduce((s,i) => s + i.price * i.qty, 0);
+  const count = items.reduce((s,i) => s + i.qty, 0);
+  document.getElementById('cart-count').textContent = count;
+  document.getElementById('total-price').textContent = total.toLocaleString('ru-RU') + ' ₽';
+}
+
+function renderCartBody() {
+  const items = Object.values(cart);
+  const body = document.getElementById('cart-body');
+  if (!items.length) {
+    body.innerHTML = `<div class="cart-empty-msg"><div style="font-size:42px;">🧺</div><p>В корзине пусто</p><p>Добавьте что-нибудь вкусное</p></div>`;
+    return;
+  }
+  body.innerHTML = items.map(item => `
+    <div class="cart-item">
+      <div class="ci-icon">${item.emoji}</div>
+      <div class="ci-info">
+        <div class="ci-name">${item.name}</div>
+        <div class="ci-price">${(item.price * item.qty).toLocaleString('ru-RU')} ₽</div>
+      </div>
+      <div class="ci-qty">
+        <button class="qbtn" onclick="changeQty(${item.id},-1)">−</button>
+        <span class="qnum">${item.qty}</span>
+        <button class="qbtn" onclick="changeQty(${item.id},1)">+</button>
+      </div>
+    </div>`).join('');
+}
+
+function openCart() {
+  document.getElementById('cart-overlay').classList.add('open');
+  document.getElementById('cart-sidebar').classList.add('open');
+  renderCartBody();
+}
+function closeCart() {
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.getElementById('cart-sidebar').classList.remove('open');
+}
+
+// ═══ ОФОРМЛЕНИЕ ═══
+function showCheckout() {
+  if (!Object.keys(cart).length) { alert('Добавьте товары в корзину'); return; }
+  document.getElementById('cart-body').style.display = 'none';
+  document.getElementById('cart-main-footer').style.display = 'none';
+  document.getElementById('checkout-panel').classList.add('active');
+}
+function hideCheckout() {
+  document.getElementById('cart-body').style.display = '';
+  document.getElementById('cart-main-footer').style.display = '';
+  document.getElementById('checkout-panel').classList.remove('active');
+}
+
+async function submitOrder() {
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!name || !phone) { alert('Пожалуйста, заполните имя и телефон'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = 'Отправляем…';
+
+  const items = Object.values(cart);
+  const total = items.reduce((s,i) => s + i.price*i.qty, 0);
+  const itemsText = items.map(i => `${i.name} × ${i.qty} шт. = ${i.price*i.qty} ₽`).join('\n');
+
+  const payload = {
+    timestamp: new Date().toLocaleString('ru-RU'),
+    name, phone,
+    delivery: document.getElementById('f-delivery').value,
+    address: document.getElementById('f-address').value.trim(),
+    time: document.getElementById('f-time').value.trim(),
+    comment: document.getElementById('f-comment').value.trim(),
+    items: itemsText,
+    total: total.toLocaleString('ru-RU') + ' ₽',
+  };
+
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload),
+    });
+  } catch(e) { /* no-cors всегда кидает ошибку, но запрос идёт */ }
+
+  document.getElementById('checkout-panel').classList.remove('active');
+  document.getElementById('cart-body').style.display = 'none';
+  document.getElementById('success-panel').classList.add('active');
+}
+
+function afterSuccess() {
+  cart = {};
+  updateCart();
+  renderProducts();
+  document.getElementById('success-panel').classList.remove('active');
+  document.getElementById('cart-body').style.display = '';
+  document.getElementById('cart-main-footer').style.display = '';
+  ['f-name','f-phone','f-address','f-time','f-comment'].forEach(id => document.getElementById(id).value = '');
+  closeCart();
+}
+
+// INIT
+renderProducts();
+updateCart();
+</script>
+</body>
+</html>
