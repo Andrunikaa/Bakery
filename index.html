@@ -942,7 +942,7 @@ footer { background: var(--ink); color: rgba(255,255,255,0.8); }
     </div>
     <div class="form-field">
       <label>Телефон *</label>
-      <input id="f-phone" type="tel" placeholder="+7 (900) 000-00-00">
+      <input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="18" placeholder="+7 (900) 000-00-00">
     </div>
     <div class="form-field">
       <label>Способ получения</label>
@@ -1121,10 +1121,40 @@ function hideCheckout() {
   document.getElementById('checkout-panel').classList.remove('active');
 }
 
+function formatPhoneInput(value) {
+  let digits = value.replace(/\D/g, '').slice(0, 11);
+  if (digits[0] === '8') digits = '7' + digits.slice(1);
+
+  const country = digits[0] ? '+' + digits[0] : '';
+  const code = digits.slice(1, 4);
+  const part1 = digits.slice(4, 7);
+  const part2 = digits.slice(7, 9);
+  const part3 = digits.slice(9, 11);
+
+  let result = country;
+  if (code) result += ' (' + code;
+  if (code.length === 3) result += ')';
+  if (part1) result += ' ' + part1;
+  if (part2) result += '-' + part2;
+  if (part3) result += '-' + part3;
+  return result;
+}
+
+function resetSubmitButton() {
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = false;
+  btn.textContent = 'Отправить заказ';
+}
+
 async function submitOrder() {
   const name = document.getElementById('f-name').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
+  const phoneInput = document.getElementById('f-phone');
+  phoneInput.value = formatPhoneInput(phoneInput.value);
+  const phone = phoneInput.value.trim();
+  const phoneDigits = phone.replace(/\D/g, '');
+  const phoneForSheet = phone.replace(/^\+/, '');
   if (!name || !phone) { alert('Пожалуйста, заполните имя и телефон'); return; }
+  if (phoneDigits.length < 10) { alert('Пожалуйста, введите корректный номер телефона'); return; }
 
   const btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.textContent = 'Отправляем…';
@@ -1135,7 +1165,8 @@ async function submitOrder() {
 
   const payload = {
     timestamp: new Date().toLocaleString('ru-RU'),
-    name, phone,
+    name,
+    phone: phoneForSheet,
     delivery: document.getElementById('f-delivery').value,
     address: document.getElementById('f-address').value.trim(),
     time: document.getElementById('f-time').value.trim(),
@@ -1155,6 +1186,7 @@ async function submitOrder() {
   document.getElementById('checkout-panel').classList.remove('active');
   document.getElementById('cart-body').style.display = 'none';
   document.getElementById('success-panel').classList.add('active');
+  resetSubmitButton();
 }
 
 function afterSuccess() {
@@ -1164,6 +1196,7 @@ function afterSuccess() {
   document.getElementById('success-panel').classList.remove('active');
   document.getElementById('cart-body').style.display = '';
   document.getElementById('cart-main-footer').style.display = '';
+  resetSubmitButton();
   ['f-name','f-phone','f-address','f-time','f-comment'].forEach(id => document.getElementById(id).value = '');
   closeCart();
 }
@@ -1175,6 +1208,9 @@ function closeMobileNav() {
 }
 
 // INIT
+document.getElementById('f-phone').addEventListener('input', function() {
+  this.value = formatPhoneInput(this.value);
+});
 renderProducts();
 updateCart();
 </script>
