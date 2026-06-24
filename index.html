@@ -536,6 +536,14 @@ footer { background: var(--ink); color: rgba(255,255,255,0.8); }
 .mobile-nav a:last-child { border-bottom: none; }
 .mobile-nav a:hover { color: var(--amber); }
 </style>
+
+<style>
+.privacy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;padding:20px;overflow:auto}
+.privacy-modal.active{display:block}
+.privacy-box{max-width:900px;margin:40px auto;background:#fff;padding:30px;border-radius:12px;line-height:1.6}
+.privacy-close{float:right;border:none;padding:8px 12px;cursor:pointer}
+</style>
+
 </head>
 <body>
 
@@ -907,7 +915,7 @@ footer { background: var(--ink); color: rgba(255,255,255,0.8); }
     <div class="footer-bottom">
       <span>© 2025 Из пекарни. Все права защищены.</span>
       <div style="display:flex;gap:20px;">
-        <a href="#">Политика конфиденциальности</a>
+        <a href="javascript:void(0)" onclick="openPrivacy()">Политика конфиденциальности</a>
         <a href="#">Публичная оферта</a>
         <a href="#">Доставка и оплата</a>
       </div>
@@ -1214,5 +1222,22 @@ document.getElementById('f-phone').addEventListener('input', function() {
 renderProducts();
 updateCart();
 </script>
+
+<div class="privacy-modal" id="privacyModal">
+  <div class="privacy-box">
+    <button class="privacy-close" onclick="closePrivacy()">✕</button>
+    <h2>Политика конфиденциальности</h2>
+    <p>Настоящий сайт может собирать данные, которые пользователь добровольно предоставляет при оформлении заказа: имя, номер телефона, адрес доставки и комментарии к заказу.</p>
+    <p>Данные используются исключительно для обработки заказов, связи с клиентом и доставки продукции.</p>
+    <p>Администрация сайта принимает разумные меры для защиты персональных данных от несанкционированного доступа.</p>
+    <p>Пользователь вправе запросить изменение или удаление своих данных, связавшись с владельцем сайта по указанным контактам.</p>
+    <p>Продолжая использовать сайт, пользователь соглашается с настоящей политикой конфиденциальности.</p>
+  </div>
+</div>
+<script>
+function openPrivacy(){document.getElementById('privacyModal').classList.add('active');}
+function closePrivacy(){document.getElementById('privacyModal').classList.remove('active');}
+</script>
+
 </body>
 </html>
